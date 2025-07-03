@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { Heart, ChevronLeft, ChevronRight, Check, Image, Music } from "lucide-react"
+import { Heart, ChevronLeft, ChevronRight, Check, ImageIcon, Music } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { MusicPlayer } from "@/components/music-player"
 
@@ -167,7 +167,7 @@ export function MediaItemComponent({ item, view, onFavoriteChange }: MediaItemPr
       {item.category_id === "music" || trackData ? (
         <Music className="h-8 w-8 text-muted-foreground mb-2" />
       ) : (
-        <Image className="h-8 w-8 text-muted-foreground mb-2" />
+        <ImageIcon className="h-8 w-8 text-muted-foreground mb-2" />
       )}
       <span className="text-sm text-muted-foreground">{item.category_id}</span>
       <span className="text-xs text-muted-foreground mt-1">ID: {item.id}</span>
@@ -197,7 +197,8 @@ export function MediaItemComponent({ item, view, onFavoriteChange }: MediaItemPr
                   className="object-cover h-full w-full"
                   onError={(e) => {
                     console.error(`Erro ao carregar imagem: ${mainImagePath}`)
-                    e.currentTarget.src = "/placeholder.svg"
+                    const target = e.currentTarget as HTMLImageElement
+                    target.src = "/placeholder.svg"
                   }}
                 />
                 {hasMultipleFiles && imageFiles.length > 1 && (
@@ -309,7 +310,8 @@ export function MediaItemComponent({ item, view, onFavoriteChange }: MediaItemPr
                               className="max-h-[70vh] w-auto mx-auto object-contain"
                               onError={(e) => {
                                 console.error(`Erro ao carregar imagem: ${imageFiles[currentImageIndex].file_path}`)
-                                e.currentTarget.src = "/placeholder.svg"
+                                const target = e.currentTarget as HTMLImageElement
+                                target.src = "/placeholder.svg"
                               }}
                             />
                             {imageFiles.length > 1 && (
@@ -352,7 +354,8 @@ export function MediaItemComponent({ item, view, onFavoriteChange }: MediaItemPr
                                     alt={`Miniatura ${index + 1}`}
                                     className="w-full h-16 object-cover"
                                     onError={(e) => {
-                                      e.currentTarget.src = "/placeholder.svg"
+                                      const target = e.currentTarget as HTMLImageElement
+                                      target.src = "/placeholder.svg"
                                     }}
                                   />
                                 </div>
@@ -441,7 +444,8 @@ export function MediaItemComponent({ item, view, onFavoriteChange }: MediaItemPr
                 className="object-cover w-full h-full"
                 onError={(e) => {
                   console.error(`Erro ao carregar imagem: ${mainImagePath}`)
-                  e.currentTarget.src = "/placeholder.svg"
+                  const target = e.currentTarget as HTMLImageElement
+                  target.src = "/placeholder.svg"
                 }}
               />
               {hasMultipleFiles && imageFiles.length > 1 && (
@@ -475,7 +479,7 @@ export function MediaItemComponent({ item, view, onFavoriteChange }: MediaItemPr
               {item.category_id === "music" ? (
                 <Music className="h-8 w-8 text-muted-foreground mb-2" />
               ) : (
-                <Image className="h-8 w-8 text-muted-foreground mb-2" />
+                <ImageIcon className="h-8 w-8 text-muted-foreground mb-2" />
               )}
               <span className="text-muted-foreground">{item.category_id}</span>
               <span className="text-xs text-muted-foreground mt-1">ID: {item.id}</span>
@@ -551,7 +555,8 @@ export function MediaItemComponent({ item, view, onFavoriteChange }: MediaItemPr
                             className="max-h-[70vh] w-auto mx-auto object-contain"
                             onError={(e) => {
                               console.error(`Erro ao carregar imagem: ${imageFiles[currentImageIndex].file_path}`)
-                              e.currentTarget.src = "/placeholder.svg"
+                              const target = e.currentTarget as HTMLImageElement
+                              target.src = "/placeholder.svg"
                             }}
                           />
                           {imageFiles.length > 1 && (
@@ -594,7 +599,8 @@ export function MediaItemComponent({ item, view, onFavoriteChange }: MediaItemPr
                                   alt={`Miniatura ${index + 1}`}
                                   className="w-full h-16 object-cover"
                                   onError={(e) => {
-                                    e.currentTarget.src = "/placeholder.svg"
+                                    const target = e.currentTarget as HTMLImageElement
+                                    target.src = "/placeholder.svg"
                                   }}
                                 />
                               </div>

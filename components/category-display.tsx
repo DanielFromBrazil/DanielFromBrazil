@@ -37,66 +37,66 @@ export function CategoryDisplay({ categoryId }: { categoryId: string }) {
   const [error, setError] = useState<string | null>(null)
   const [favorites, setFavorites] = useState<Record<number, boolean>>({})
 
-  useEffect(() => {
-    async function fetchMediaItems() {
-      setLoading(true)
-      setError(null)
+  const fetchMediaItems = async () => {
+    setLoading(true)
+    setError(null)
 
-      try {
-        console.log("Buscando itens de mídia para categoria:", categoryId)
+    try {
+      console.log("Buscando itens de mídia para categoria:", categoryId)
 
-        // Adicionar timestamp para evitar cache
-        const timestamp = new Date().getTime()
-        const response = await fetch(`/api/media?categoryId=${categoryId}&_=${timestamp}`, {
-          headers: {
-            "Cache-Control": "no-cache, no-store, must-revalidate",
-            Pragma: "no-cache",
-            Expires: "0",
-          },
-        })
+      // Adicionar timestamp para evitar cache
+      const timestamp = new Date().getTime()
+      const response = await fetch(`/api/media?categoryId=${categoryId}&_=${timestamp}`, {
+        headers: {
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          Pragma: "no-cache",
+          Expires: "0",
+        },
+      })
 
-        if (!response.ok) {
-          throw new Error(`Falha ao buscar itens de mídia: ${response.status} ${response.statusText}`)
-        }
-
-        const data = await response.json()
-        console.log(`Encontrados ${data.length} itens para a categoria ${categoryId}`)
-
-        // Log para depuração
-        if (data.length > 0) {
-          console.log("Exemplo do primeiro item:", {
-            id: data[0].id,
-            title: data[0].title,
-            date: data[0].date,
-            hasFiles: data[0].files?.length || 0,
-            hasTrackData: !!data[0].track_data,
-          })
-        }
-
-        setItems(data)
-
-        // Buscar status de favoritos para cada item
-        const favoritesMap: Record<number, boolean> = {}
-        for (const item of data) {
-          try {
-            const favResponse = await fetch(`/api/favorites?mediaId=${item.id}`)
-            if (favResponse.ok) {
-              const favData = await favResponse.json()
-              favoritesMap[item.id] = favData.isFavorite
-            }
-          } catch (err) {
-            console.error(`Erro ao verificar favorito para item ${item.id}:`, err)
-          }
-        }
-        setFavorites(favoritesMap)
-      } catch (err) {
-        console.error("Erro ao buscar itens de mídia:", err)
-        setError("Falha ao carregar itens de mídia. Por favor, tente novamente mais tarde.")
-      } finally {
-        setLoading(false)
+      if (!response.ok) {
+        throw new Error(`Falha ao buscar itens de mídia: ${response.status} ${response.statusText}`)
       }
-    }
 
+      const data = await response.json()
+      console.log(`Encontrados ${data.length} itens para a categoria ${categoryId}`)
+
+      // Log para depuração
+      if (data.length > 0) {
+        console.log("Exemplo do primeiro item:", {
+          id: data[0].id,
+          title: data[0].title,
+          date: data[0].date,
+          hasFiles: data[0].files?.length || 0,
+          hasTrackData: !!data[0].track_data,
+        })
+      }
+
+      setItems(data)
+
+      // Buscar status de favoritos para cada item
+      const favoritesMap: Record<number, boolean> = {}
+      for (const item of data) {
+        try {
+          const favResponse = await fetch(`/api/favorites?mediaId=${item.id}`)
+          if (favResponse.ok) {
+            const favData = await favResponse.json()
+            favoritesMap[item.id] = favData.isFavorite
+          }
+        } catch (err) {
+          console.error(`Erro ao verificar favorito para item ${item.id}:`, err)
+        }
+      }
+      setFavorites(favoritesMap)
+    } catch (err) {
+      console.error("Erro ao buscar itens de mídia:", err)
+      setError("Falha ao carregar itens de mídia. Por favor, tente novamente mais tarde.")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
     fetchMediaItems()
   }, [categoryId])
 
@@ -182,8 +182,10 @@ export function CategoryDisplay({ categoryId }: { categoryId: string }) {
               key={item.id}
               item={item}
               view={view}
-              isFavorite={favorites[item.id] || false}
-              onToggleFavorite={handleToggleFavorite}
+              onFavoriteChange={() => {
+                // Recarregar a lista após mudança nos favoritos
+                fetchMediaItems()
+              }}
             />
           ))}
         </div>

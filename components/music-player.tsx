@@ -17,13 +17,6 @@ interface MusicPlayerProps {
 export function MusicPlayer({ track }: MusicPlayerProps) {
   // Verificar se o usuário está logado no Spotify
   const [isAuthenticated, setIsAuthenticated] = useState(isLoggedIn())
-
-  // Se o usuário estiver logado, usar o player do Spotify
-  if (isAuthenticated) {
-    return <SpotifyPlayer track={track} />
-  }
-
-  // Código existente para o player de prévia
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
   const [volume, setVolume] = useState(0.7)
@@ -31,6 +24,13 @@ export function MusicPlayer({ track }: MusicPlayerProps) {
   const [error, setError] = useState<string | null>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Se o usuário estiver logado, usar o player do Spotify
+  if (isAuthenticated) {
+    return <SpotifyPlayer track={track} />
+  }
+
+  // Código existente para o player de prévia
 
   // Inicializar o áudio quando o componente montar ou a faixa mudar
   useEffect(() => {
@@ -54,8 +54,8 @@ export function MusicPlayer({ track }: MusicPlayerProps) {
     audio.volume = volume
     audio.preload = "metadata"
 
-    audio.addEventListener("error", (e) => {
-      console.error("Erro ao carregar áudio:", e)
+    audio.addEventListener("error", () => {
+      console.error("Erro ao carregar áudio")
       setError("Não foi possível carregar a prévia da música")
       setIsPlaying(false)
     })
@@ -261,7 +261,7 @@ export function MusicPlayer({ track }: MusicPlayerProps) {
           </div>
 
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={openInSpotify} className="text-xs">
+            <Button variant="outline" size="sm" onClick={openInSpotify} className="text-xs bg-transparent">
               <ExternalLink className="h-3 w-3 mr-1" />
               Ouvir completa
             </Button>
