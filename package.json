@@ -1,0 +1,51 @@
+{
+  "name": "amor-digital-site",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@radix-ui/react-alert-dialog": "^1.0.5",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-label": "latest",
+    "@radix-ui/react-select": "^2.0.0",
+    "@radix-ui/react-tabs": "latest",
+    "class-variance-authority": "^0.7.1",
+    "cloudinary": "latest",
+    "clsx": "^2.1.1",
+    "dns": "latest",
+    "firebase": "^10.8.0",
+    "firebase-admin": "^12.0.0",
+    "fs": "latest",
+    "lucide-react": "^0.454.0",
+    "mysql2": "latest",
+    "net": "latest",
+    "next": "14.2.16",
+    "node-gyp": "latest",
+    "path": "latest",
+    "react": "^18",
+    "react-dom": "^18",
+    "sqlite": "latest",
+    "sqlite3": "latest",
+    "tailwind-merge": "^2.5.5",
+    "tailwindcss-animate": "^1.0.7",
+    "util": "latest",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/uuid": "^9.0.8",
+    "autoprefixer": "^10.4.17",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "14.1.0",
+    "postcss": "^8.5",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
