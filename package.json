@@ -11,8 +11,10 @@
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dropdown-menu": "latest",
     "@radix-ui/react-label": "latest",
     "@radix-ui/react-select": "^2.0.0",
+    "@radix-ui/react-slider": "latest",
     "@radix-ui/react-tabs": "latest",
     "class-variance-authority": "^0.7.1",
     "cloudinary": "latest",
